@@ -3,8 +3,8 @@
 	"package": "r93.configurableheadbob.client.mixin", 
 	"compatibilityLevel": "JAVA_25",
 	"client": [
-		"ExampleClientMixin",
-		"OptionMenuOverrideMixin"
+		"OptionMenuOverrideMixin",
+		"ViewbobOverrideMixin"
 	],
 	"injectors": {
 		"defaultRequire": 1

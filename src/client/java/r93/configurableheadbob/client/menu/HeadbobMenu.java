@@ -18,13 +18,13 @@ import net.minecraft.network.chat.CommonComponents;
 public class HeadbobMenu extends OptionsSubScreen {
     
     //Button related bools
-    private boolean advMode = false;
+    //private boolean advMode = MenuValues.advMode;
 
     //Defining the sliders for the menu
-    private final OptionInstance<Integer> viewIntensitySlider = this.createSlider("configurable-headbob.settings.arms.intensity.global", 100, value -> {});
-    private final OptionInstance<Integer> viewScaleSlider = this.createSlider("configurable-headbob.settings.arms.speed.global", 100, value -> {});
-    private final OptionInstance<Integer> camIntensitySlider = this.createSlider("configurable-headbob.settings.cam.intensity.global", 100, value -> {});
-    private final OptionInstance<Integer> camScaleSlider = this.createSlider("configurable-headbob.settings.cam.speed.global", 100, value -> {});
+    private final OptionInstance<Integer> viewIntensitySlider = this.createSlider("configurable-headbob.settings.arms.intensity.global", Math.round(MenuValues.viewIntensity * 100.0F), value -> MenuValues.viewIntensity = value/ 100.0F);
+    private final OptionInstance<Integer> viewScaleSlider = this.createSlider("configurable-headbob.settings.arms.speed.global", Math.round(MenuValues.viewSpeed * 100.0F), value -> MenuValues.viewSpeed = value/ 100.0F);
+    private final OptionInstance<Integer> camIntensitySlider = this.createSlider("configurable-headbob.settings.cam.intensity.global", Math.round(MenuValues.camIntensity * 100.0F), value -> MenuValues.camIntensity = value/ 100.0F);
+    private final OptionInstance<Integer> camScaleSlider = this.createSlider("configurable-headbob.settings.cam.speed.global", Math.round(MenuValues.camSpeed * 100.0F), value -> MenuValues.camSpeed = value/ 100.0F);
 
 
 
@@ -55,7 +55,7 @@ public class HeadbobMenu extends OptionsSubScreen {
 
         toggleSliders(optionsList);
         //Sliders only exist if view bob is enabled in the first place
-        if (advMode) {
+        if (MenuValues.advMode) {
             System.out.println("Advanced Options pending!");}
     
     }
@@ -85,7 +85,8 @@ public class HeadbobMenu extends OptionsSubScreen {
     } 
 
     private void switchMode(Button modeButton){
-        advMode = !advMode;
+        
+        MenuValues.advMode = !MenuValues.advMode;
         updateModeButton(modeButton);
     }
 
@@ -96,7 +97,7 @@ public class HeadbobMenu extends OptionsSubScreen {
 
         if (!buttonActive){
             modeText = CommonComponents.OPTION_OFF;
-        } else if (advMode){
+        } else if (MenuValues.advMode){
             modeText = Component.translatable("configurable-headbob.settings.mode.advanced");
         } else {
             modeText = Component.translatable("configurable-headbob.settings.mode.basic");

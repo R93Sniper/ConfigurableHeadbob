@@ -39,6 +39,8 @@ public class HeadbobMenu extends OptionsSubScreen {
         Button modeSelect = Button.builder(Component.literal("Uninitalized"), this::switchMode).width(150).build();
         updateModeButton(modeSelect); //Ensure the text is correct when initialized
 
+        Button resetButton = Button.builder(Component.translatable("configurable-headbob.settings.reset"), clickedButton -> resetToDefault()).build();
+
         optionsList.addSmall(options.bobView().createButton(options, 0, 0, 150, enabled -> {
             updateModeButton(modeSelect); 
             toggleSliders(optionsList);
@@ -57,7 +59,8 @@ public class HeadbobMenu extends OptionsSubScreen {
         //Sliders only exist if view bob is enabled in the first place
         if (MenuValues.advMode) {
             System.out.println("Advanced Options pending!");}
-    
+        
+        optionsList.addBig(resetButton);
     }
 
     /*
@@ -106,6 +109,17 @@ public class HeadbobMenu extends OptionsSubScreen {
         modeButton.setMessage(Component.translatable("configurable-headbob.settings.mode").append(" ").append(modeText));
     }
 
-    
+    private void resetToDefault(){
+        
+        //Apparently creating an integer array like this is illegal...
+        //OptionInstance<Integer>[] theSliders = {viewIntensitySlider, viewScaleSlider, camIntensitySlider, camScaleSlider};
+
+        var theSliders = java.util.List.of(viewIntensitySlider, viewScaleSlider, camIntensitySlider, camScaleSlider);
+
+        for (var currentSlider: theSliders){
+            currentSlider.set(100);
+            resetOption(currentSlider);
+        }
+    }
 
 }

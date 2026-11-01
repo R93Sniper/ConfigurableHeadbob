@@ -23,5 +23,6 @@
  "configurable-headbob.settings.cam.speed.horiz":"Camera Horizontal Speed Scale",
  "configurable-headbob.settings.cam.speed.vert":"Camera Vertical Speed Scale",
  "configurable-headbob.settings.cam.speed.pitch":"Camera Speed Scale Pitch",
- "configurable-headbob.settings.cam.speed.roll":"Camera Speed Scale Roll"
+ "configurable-headbob.settings.cam.speed.roll":"Camera Speed Scale Roll",
+ "configurable-headbob.settings.reset":"Reset"
 }

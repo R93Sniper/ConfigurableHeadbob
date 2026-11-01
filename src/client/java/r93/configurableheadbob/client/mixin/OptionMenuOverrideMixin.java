@@ -13,8 +13,10 @@ import net.minecraft.client.gui.screens.options.OptionsSubScreen;
 import net.minecraft.client.gui.screens.options.AccessibilityOptionsScreen;
 import net.minecraft.network.chat.Component;
 
+import org.jspecify.annotations.NullMarked;
 import r93.configurableheadbob.client.menu.HeadbobMenu;
 
+@NullMarked 
 @Mixin(targets = "net.minecraft.client.gui.components.OptionsList$Entry")
 public class OptionMenuOverrideMixin {
     

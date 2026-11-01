@@ -36,7 +36,7 @@ public class OptionMenuOverrideMixin {
         if (owningScreen instanceof AccessibilityOptionsScreen && currentInstance == currentOption.bobView()){
             System.out.println("Grabbed Headbobbing Options button for replacement");
             AbstractWidget configureViewbobButton = Button.builder(Component.translatable("configurable-headbob.settings.title"), 
-                clickedButton -> new HeadbobMenu(owningScreen, currentOption) ).width(150).build();
+                clickedButton -> Minecraft.getInstance().gui.setScreen(new HeadbobMenu(owningScreen, currentOption)) ).width(150).build();
             return configureViewbobButton;}
         else {
             System.out.println("Sticking to Vanilla Behavior");

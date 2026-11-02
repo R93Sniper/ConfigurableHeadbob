@@ -5,6 +5,7 @@ import java.util.Objects;
 import java.util.HashMap;
 import java.util.Map;
 
+
 import net.minecraft.client.Options;
 import net.minecraft.client.OptionInstance;
 import net.minecraft.client.gui.screens.Screen;
@@ -146,7 +147,13 @@ public class HeadbobMenu extends OptionsSubScreen {
         syncAllOptions();
         toggleSliders(optionsList);
     }
-    
+
+    @Override 
+    public void removed(){
+        super.removed();
+        //Save settings when we close the menu
+        MenuValues.save();
+    }
 
     /*
     ==================================================================================================

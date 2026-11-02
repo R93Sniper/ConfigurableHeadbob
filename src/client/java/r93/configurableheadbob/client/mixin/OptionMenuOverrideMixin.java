@@ -9,6 +9,7 @@ import net.minecraft.client.OptionInstance;
 import net.minecraft.client.Options;
 import net.minecraft.client.gui.components.AbstractWidget;
 import net.minecraft.client.gui.components.Button;
+import net.minecraft.client.gui.components.Tooltip;
 import net.minecraft.client.gui.screens.options.OptionsSubScreen;
 import net.minecraft.client.gui.screens.options.AccessibilityOptionsScreen;
 import net.minecraft.network.chat.Component;
@@ -39,7 +40,8 @@ public class OptionMenuOverrideMixin {
             //System.out.println("Grabbed Headbobbing Options button for replacement");
             AbstractWidget configureViewbobButton = Button.builder(Component.translatable("configurable-headbob.settings"), 
                 clickedButton -> Minecraft.getInstance().gui.setScreen(new HeadbobMenu(owningScreen, currentOption)) ).width(150).build();
-            return configureViewbobButton;}
+                configureViewbobButton.setTooltip(Tooltip.create(Component.translatable("configurable-headbob.tooltip.title")));
+                return configureViewbobButton;}
         else {
             //System.out.println("Sticking to Vanilla Behavior");
             return currentInstance.createButton(currentOption);

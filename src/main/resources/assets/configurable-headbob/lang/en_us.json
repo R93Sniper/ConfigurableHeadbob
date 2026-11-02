@@ -25,5 +25,18 @@
  "configurable-headbob.cam.speed.vert":"Camera Vertical Speed Scale",
  "configurable-headbob.cam.speed.pitch":"Camera Speed Scale Pitch",
  "configurable-headbob.cam.speed.roll":"Camera Speed Scale Roll",
- "configurable-headbob.reset":"Reset"
+ "configurable-headbob.reset":"Reset",
+ "configurable-headbob.tooltip.global":"Toggle all headbob effects",
+ "configurable-headbob.tooltip.title":"Configure your headbob settings",
+ "configurable-headbob.tooltip.mode":"Switch between Basic and Advanced Options",
+ "configurable-headbob.tooltip.arms.intensity.global":"How much your arms and items move overall",
+ "configurable-headbob.tooltip.arms.speed.global":"How fast your arms and items move relative to your speed",
+ "configurable-headbob.tooltip.cam.intensity.global":"How much your camera moves overall",
+ "configurable-headbob.tooltip.cam.speed.global":"How fast your camera moves relative to your speed",
+ "configurable-headbob.tooltip.horiz":"Side-to-Side motion",
+ "configurable-headbob.tooltip.vert":"Up-and-Down motion",
+ "configurable-headbob.tooltip.roll":"Left-to-Right tilt motion",
+ "configurable-headbob.tooltip.pitch":"Top-to-Bottom tilt motion",
+ "configurable-headbob.tooltip.reset":"Reset all values to their defaults",
+ "configurable-headbob.tooltip.values":"A value of 1.0 is the same as Vanilla, 0 is off, and 2.0 is double"
 }

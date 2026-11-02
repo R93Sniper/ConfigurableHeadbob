@@ -3,17 +3,17 @@
 	"id": "configurable-headbob",
 	"version": "${version}",
 	"name": "Configurable Headbob",
-	"description": "This is an example description! Tell everyone what your mod is about!",
+	"description": "Control Minecraft's Headbobbing!",
 	"authors": [
-		"Me!"
+		"R93 Sniper"
 	],
 	"contact": {
-		"homepage": "https://fabricmc.net/",
-		"sources": "https://github.com/FabricMC/fabric-example-mod"
+		"homepage": "https://modrinth.com/project/configurableheadbob/",
+		"sources": "https://github.com/R93Sniper/ConfigurableHeadbob"
 	},
-	"license": "CC0-1.0",
+	"license": "LicenseRef-GPL-3.0-only-with-Minecraft-linking-exception",
 	"icon": "assets/configurable-headbob/icon.png",
-	"environment": "*",
+	"environment": "client",
 	"entrypoints": {
 		"main": [
 			"r93.configurableheadbob.ConfigurableHeadbob"

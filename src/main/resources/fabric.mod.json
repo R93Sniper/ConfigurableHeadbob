@@ -15,15 +15,11 @@
 	"icon": "assets/configurable-headbob/icon.png",
 	"environment": "client",
 	"entrypoints": {
-		"main": [
-			"r93.configurableheadbob.ConfigurableHeadbob"
-		],
 		"client": [
 			"r93.configurableheadbob.client.ConfigurableHeadbobClient"
 		]
 	},
 	"mixins": [
-		"configurable-headbob.mixins.json",
 		{
 			"config": "configurable-headbob.client.mixins.json",
 			"environment": "client"

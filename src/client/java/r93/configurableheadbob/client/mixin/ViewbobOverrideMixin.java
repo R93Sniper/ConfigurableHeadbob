@@ -9,8 +9,9 @@ import org.spongepowered.asm.mixin.injection.At;
 import org.spongepowered.asm.mixin.injection.Redirect;
 import com.mojang.blaze3d.vertex.PoseStack;
 import com.mojang.math.Axis;
+import net.minecraft.client.Minecraft;
 import net.minecraft.client.renderer.GameRenderer;
-import net.minecraft.client.renderer.state.level.CameraRenderState;
+import net.minecraft.world.entity.player.Player;
 import net.minecraft.util.Mth;
 
 
@@ -23,11 +24,11 @@ public class ViewbobOverrideMixin {
     method = "renderLevel",
     at = @At(
         value = "INVOKE",
-        target = "Lnet/minecraft/client/renderer/GameRenderer;bobView(Lnet/minecraft/client/renderer/state/level/CameraRenderState;Lcom/mojang/blaze3d/vertex/PoseStack;)V"
+        target = "Lnet/minecraft/client/renderer/GameRenderer;bobView(Lcom/mojang/blaze3d/vertex/PoseStack;F)V"
         )
     )
-    private void interceptCamHeadbob(GameRenderer theRenderer, CameraRenderState currentRenderState, PoseStack thePoseStack) {
-        overrideHeadbob(currentRenderState, thePoseStack, MenuValues.camIntensity, MenuValues.camSpeed);
+    private void interceptCamHeadbob(GameRenderer theRenderer, PoseStack thePoseStack, float partialTick) {
+        overrideHeadbob(thePoseStack, partialTick, MenuValues.camIntensity, MenuValues.camSpeed);
     }
 
     //Intercept the call for the viewmodel's headbobbing
@@ -35,25 +36,25 @@ public class ViewbobOverrideMixin {
     method = "renderItemInHand",
     at = @At(
         value = "INVOKE",
-        target = "Lnet/minecraft/client/renderer/GameRenderer;bobView(Lnet/minecraft/client/renderer/state/level/CameraRenderState;Lcom/mojang/blaze3d/vertex/PoseStack;)V"
+        target = "Lnet/minecraft/client/renderer/GameRenderer;bobView(Lcom/mojang/blaze3d/vertex/PoseStack;F)V"
         )
     )
-    private void interceptViewHeadbob(GameRenderer theRenderer, CameraRenderState currentRenderState, PoseStack thePoseStack) {
-        overrideHeadbob(currentRenderState, thePoseStack, MenuValues.viewIntensity, MenuValues.viewSpeed);
+    private void interceptViewHeadbob(GameRenderer theRenderer, PoseStack thePoseStack, float partialTick) {
+        overrideHeadbob(thePoseStack, partialTick, MenuValues.viewIntensity, MenuValues.viewSpeed);
     }
 
     @Unique
-    private void overrideHeadbob(CameraRenderState currentRenderState, PoseStack thePoseStack, MenuValues.SliderComponents bobIntensity, MenuValues.SliderComponents bobSpeedScale) {
+    private void overrideHeadbob(PoseStack thePoseStack, float partialTick, MenuValues.SliderComponents bobIntensity, MenuValues.SliderComponents bobSpeedScale) {
 
         // Early exit. Mirrors vanilla behavior for non-players
-        if (!currentRenderState.entityRenderState.isPlayer) {
+        if (!(Minecraft.getInstance().getCameraEntity() instanceof Player thePlayer)) {
             return;
         } 
         
 
         // Grab values to start scaling
-        float walkDistance = currentRenderState.entityRenderState.backwardsInterpolatedWalkDistance;
-        float currentBobIntensity = currentRenderState.entityRenderState.bob;
+        float walkDistance = -(thePlayer.walkDist + (thePlayer.walkDist - thePlayer.walkDistO) * partialTick);
+        float currentBobIntensity = Mth.lerp(partialTick, thePlayer.oBob, thePlayer.bob);
         
         //Phase Components
         //float bobPhase = walkDistance * bobSpeedScale.getBasicValue() * (float) Math.PI;
@@ -112,8 +113,8 @@ public class ViewbobOverrideMixin {
         }
 
         thePoseStack.translate(horizMove,vertMove, 0.0F);
-        thePoseStack.rotateDegrees(Axis.ZP, rollRot);
-        thePoseStack.rotateDegrees(Axis.XP, pitchRot);
+        thePoseStack.mulPose(Axis.ZP.rotationDegrees(rollRot));
+        thePoseStack.mulPose(Axis.XP.rotationDegrees(pitchRot));
 
 
     }

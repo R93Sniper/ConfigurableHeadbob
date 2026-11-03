@@ -12,13 +12,14 @@ import net.minecraft.client.gui.components.Button;
 import net.minecraft.client.gui.components.Tooltip;
 import net.minecraft.client.gui.screens.options.OptionsSubScreen;
 import net.minecraft.client.gui.screens.options.AccessibilityOptionsScreen;
+import net.minecraft.client.gui.screens.options.VideoSettingsScreen;
 import net.minecraft.network.chat.Component;
 
 import org.jspecify.annotations.NullMarked;
 import r93.configurableheadbob.client.menu.HeadbobMenu;
 
 @NullMarked 
-@Mixin(targets = "net.minecraft.client.gui.components.OptionsList$Entry")
+@Mixin(targets = "net.minecraft.client.gui.components.OptionsList$OptionEntry")
 public class OptionMenuOverrideMixin {
     
     /*
@@ -26,7 +27,7 @@ public class OptionMenuOverrideMixin {
     Man, The really long class path names feel incredibly weird, but thats correct!
     */
     @Redirect(
-        method = "small(Lnet/minecraft/client/Options;Lnet/minecraft/client/OptionInstance;Lnet/minecraft/client/OptionInstance;Lnet/minecraft/client/gui/screens/options/OptionsSubScreen;)Lnet/minecraft/client/gui/components/OptionsList$Entry;",
+        method = "small(Lnet/minecraft/client/Options;Lnet/minecraft/client/OptionInstance;Lnet/minecraft/client/OptionInstance;Lnet/minecraft/client/gui/screens/options/OptionsSubScreen;)Lnet/minecraft/client/gui/components/OptionsList$OptionEntry;",
         at = @At(
             value = "INVOKE",
             target = "Lnet/minecraft/client/OptionInstance;createButton(Lnet/minecraft/client/Options;)Lnet/minecraft/client/gui/components/AbstractWidget;"
@@ -36,10 +37,11 @@ public class OptionMenuOverrideMixin {
         Options rowFactory, OptionInstance<?> firstOption, OptionInstance<?> secondOption, OptionsSubScreen owningScreen){
 
         //Go through all the accessibility options and find the view bob button so we can replace it.
-        if (owningScreen instanceof AccessibilityOptionsScreen && currentInstance == currentOption.bobView()){
+        //Apparently for 1.21.1 it's also in the video settings screen, so gotta check that too...
+        if ((owningScreen instanceof AccessibilityOptionsScreen || owningScreen instanceof VideoSettingsScreen) && currentInstance == currentOption.bobView()){
             //System.out.println("Grabbed Headbobbing Options button for replacement");
             AbstractWidget configureViewbobButton = Button.builder(Component.translatable("configurable-headbob.settings"), 
-                clickedButton -> Minecraft.getInstance().gui.setScreen(new HeadbobMenu(owningScreen, currentOption)) ).width(150).build();
+                clickedButton -> Minecraft.getInstance().setScreen(new HeadbobMenu(owningScreen, currentOption)) ).width(150).build();
                 configureViewbobButton.setTooltip(Tooltip.create(Component.translatable("configurable-headbob.tooltip.title")));
                 return configureViewbobButton;}
         else {
